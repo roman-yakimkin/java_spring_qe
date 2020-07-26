@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="inputer" class="ru.yrv.tools.ConstantInputer">
+    </bean>
+    <bean id="arguments" class="ru.yrv.model.Arguments">
+        <constructor-arg value="#{inputer.arguments}"></constructor-arg>
+    </bean>
+    <bean id="outputer" class="ru.yrv.tools.ConsoleOutputer">
+    </bean>
+    <bean id="results" class="ru.yrv.model.Results">
+    </bean>
+    <bean id="calculator" class="ru.yrv.tools.Calculator">
+        <constructor-arg name="arguments" ref="arguments" />
+        <constructor-arg name="results" ref="results" />
+    </bean>
+</beans>
