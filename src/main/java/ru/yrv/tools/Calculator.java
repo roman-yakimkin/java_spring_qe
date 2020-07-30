@@ -36,14 +36,15 @@ public class Calculator {
 
     public void calculate() {
         double x1, x2;
+        double d = this.discriminant();
         if (arguments.getA() == 0) {
             x1 = -arguments.getC() / arguments.getB();
             results.setResults(new Double[] {x1});
-        } else if (discriminant() < 0) {
+        } else if (d < 0) {
             results.setResults(new Double[] {});
         } else {
-            x1 = (- arguments.getB() + Math.sqrt(discriminant())) / (2 * arguments.getA());
-            x2 = (- arguments.getB() - Math.sqrt(discriminant())) / (2 * arguments.getA());
+            x1 = (- arguments.getB() + Math.sqrt(d)) / (2 * arguments.getA());
+            x2 = (- arguments.getB() - Math.sqrt(d)) / (2 * arguments.getA());
             results.setResults(new Double[] {x1, x2});
         }
     }

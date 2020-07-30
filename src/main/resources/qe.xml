@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                          http://www.springframework.org/schema/beans/spring-beans.xsd
+                          http://www.springframework.org/schema/aop
+                          http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <aop:config>
+        <aop:aspect ref="calcAspect">
+            <aop:after method="watchCalcDiscriminant"
+                       pointcut="execution(* ru.yrv.tools.*.*(..))" />
+            <aop:before pointcut="execution(* ru.yrv.tools.ConsoleOutputer.output(ru.yrv.model.Results)) and args(results)"
+                        method="watchOutputResults"
+                        arg-names="results" />
+        </aop:aspect>
+    </aop:config>
     <bean id="inputer" class="ru.yrv.tools.ConstantInputer">
     </bean>
     <bean id="arguments" class="ru.yrv.model.Arguments">
-        <constructor-arg value="#{inputer.arguments}"></constructor-arg>
+        <constructor-arg value="#{inputer.arguments}" />
     </bean>
     <bean id="outputer" class="ru.yrv.tools.ConsoleOutputer">
     </bean>
@@ -14,5 +27,7 @@
     <bean id="calculator" class="ru.yrv.tools.Calculator">
         <constructor-arg name="arguments" ref="arguments" />
         <constructor-arg name="results" ref="results" />
+    </bean>
+    <bean id="calcAspect" class="ru.yrv.aspect.CalcAspect">
     </bean>
 </beans>
